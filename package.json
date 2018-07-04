@@ -4,6 +4,10 @@
   "description": "the wbb bot",
   "main": "index.ts",
   "scripts": {
+    "build": "tsc",
+    "dev": "ts-node ./src/app.ts",
+    "start": "node ./dist/app.js",
+    "prd": "npm run build && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
