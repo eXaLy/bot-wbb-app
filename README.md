@@ -7,6 +7,5 @@ The next level bot stuff.
 - Install NodeJS 8
 - Install by NodeJS:
 ```
-npm install -g typescript
-npm install -g ts-node
+npm install -g ts-node tslint typescript
 ```
