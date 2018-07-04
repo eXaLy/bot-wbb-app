@@ -7,6 +7,8 @@
     "build": "npm run lint && tsc",
     "dev": "ts-node ./src/app.ts",
     "start": "node ./output/dist/app.js",
+    "start-debug": "node --inspect ./output/dist/app.js",
+    "debug": "npm run build && npm start-debug",
     "prd": "npm run build && npm start",
     "lint": "tslint --project ./tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
