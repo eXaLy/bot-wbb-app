@@ -1,0 +1,19 @@
+{
+  "name": "bot-wbb-app",
+  "version": "1.0.0",
+  "description": "the wbb bot",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/bot-wbb/bot-wbb-app.git"
+  },
+  "author": "Aswin Ly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/bot-wbb/bot-wbb-app/issues"
+  },
+  "homepage": "https://gitlab.com/bot-wbb/bot-wbb-app#README"
+}
