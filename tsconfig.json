@@ -5,7 +5,7 @@
     "pretty": false,
     "sourceMap": true,
     "target": "es6",
-    "outDir": "./dist",
+    "outDir": "./output/dist",
     "baseUrl": "./src"
   },
   "include": [
