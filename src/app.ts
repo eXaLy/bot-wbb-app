@@ -1,1 +1,1 @@
-console.log('WHATSUPPP')
+console.log('WHATSUPPP');

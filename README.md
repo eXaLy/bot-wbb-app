@@ -21,5 +21,6 @@ npm run prd
 - Install NodeJS 8
 - Install by NodeJS:
 ```
+npm install
 npm install -g ts-node tslint typescript
 ```
