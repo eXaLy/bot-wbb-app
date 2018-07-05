@@ -24,6 +24,10 @@
   },
   "homepage": "https://gitlab.com/bot-wbb/bot-wbb-app#README",
   "dependencies": {
+    "rxjs": "^6.2.1"
+  },
+  "devDependencies": {
+    "rxjs-tslint-rules": "^4.5.1",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "^5.9.2",
     "typescript": "^2.9.2"
