@@ -10,11 +10,11 @@ export class SoccerVideosFeedProcessor {
     });
   });
 
-  public start() : void {
+  public enable() : void {
 
   }
 
-  public stop() : void {
+  public disable() : void {
 
   }
 }

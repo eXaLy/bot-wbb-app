@@ -29,9 +29,9 @@ export class SoccerVideosFeedManager {
 
   private onActive(isActive: boolean) : void {
     if (isActive) {
-      this.processor.start();
+      this.processor.enable();
     } else {
-      this.processor.stop();
+      this.processor.disable();
     }
   }
 
