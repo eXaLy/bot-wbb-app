@@ -8,6 +8,6 @@ export function findToken() : string {
   try {
     return fs.readFileSync(TOKEN_PATH, UTF8);
   } catch (e) {
-    logger.error('Token file not found in root [token]', e);
+    logger.error('Token file not found in root, expected file name: [token]', e);
   }
 }
