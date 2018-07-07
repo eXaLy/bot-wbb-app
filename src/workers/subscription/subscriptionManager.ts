@@ -13,7 +13,7 @@ export class SubscriptionManager {
   private unsubscribeCommand: string;
   private activeChannelIds = [] as string[];
 
-  private hasSubscribers = new BehaviorSubject(false);
+  private hasSubscribers = new BehaviorSubject<boolean>(false);
 
   constructor(bot: Bot, key: string, subscribeCommand: string, unsubscribeCommand: string) {
     this.bot = bot;
@@ -39,9 +39,7 @@ export class SubscriptionManager {
     });
   }
 
-  // TODO: SOMETHING BUGGY HERE
   private onMessage(data: MessageData) : void {
-    logger.info(TAG + ' Message in for [' + this.key + ']');
     if (data.message.contains(this.subscribeCommand)) {
       this.addChannel(data.channelId);
       this.updateState();
@@ -51,14 +49,17 @@ export class SubscriptionManager {
     }
   }
 
-  // TODO: SOMETHING BUGGY HERE
   private updateState() {
-    if (this.activeChannelIds.length > 0 && !this.hasSubscribers.getValue) {
-      this.hasSubscribers.next(true);
-      logger.info(TAG + ' Has active subscribers on [' + this.key + ']');
-    } else if (this.hasSubscribers.getValue) {
-      this.hasSubscribers.next(false);
-      logger.info(TAG + ' No active subscribers on [' + this.key + ']');
+    if (this.activeChannelIds.length > 0) {
+      if (!this.hasSubscribers.value) {
+        this.hasSubscribers.next(true);
+        logger.info(TAG + ' Has active subscribers on [' + this.key + ']');
+      }
+    } else {
+      if (this.hasSubscribers.value) {
+        this.hasSubscribers.next(false);
+        logger.info(TAG + ' No active subscribers on [' + this.key + ']');
+      }
     }
   }
 
