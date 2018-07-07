@@ -5,7 +5,7 @@ export class ListenToReplyProcessor {
   public ask(message: string) : string {
     const msgs = messages.default;
     for (const msgIn in msgs) {
-      if (msgs.hasOwnProperty(msgIn) && message.toLowerCase().indexOf(msgIn) > -1) {
+      if (msgs.hasOwnProperty(msgIn) && message.contains(msgIn)) {
         return msgs[msgIn];
       }
     }
