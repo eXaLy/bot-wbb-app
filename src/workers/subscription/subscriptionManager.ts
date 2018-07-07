@@ -12,8 +12,13 @@ export class SubscriptionManager {
   private subscribeCommand: string;
   private unsubscribeCommand: string;
   private activeChannelIds = [] as string[];
-
   private hasSubscribers = new BehaviorSubject<boolean>(false);
+
+  public isActive = new Observable<boolean>((observer) => {
+    this.hasSubscribers.subscribe({
+      next: hasSubscribers => observer.next(hasSubscribers),
+    });
+  });
 
   constructor(bot: Bot, key: string, subscribeCommand: string, unsubscribeCommand: string) {
     this.bot = bot;
@@ -22,12 +27,6 @@ export class SubscriptionManager {
     this.unsubscribeCommand = unsubscribeCommand;
     this.listenToMessages();
   }
-
-  public isActive = new Observable<boolean>((observer) => {
-    this.hasSubscribers.subscribe({
-      next: hasSubscribers => observer.next(hasSubscribers),
-    });
-  });
 
   public getActiveChannelIds() : string[] {
     return this.activeChannelIds.map(x => Object.assign({}, x));

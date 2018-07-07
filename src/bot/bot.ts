@@ -1,5 +1,5 @@
 import * as discord from 'discord.io';
-import * as tokenFinder from '../utils/tokenFinder';
+import * as tokenFinder from './botTokenFinder';
 import logger from '../utils/logger';
 import { Observable, Subject } from 'rxjs';
 import { MessageData } from './messageData';
@@ -9,8 +9,24 @@ export class Bot {
   private bot: discord.Client;
   private messagesSubject = new Subject<MessageData>();
 
+  public messages = new Observable<MessageData>((observer) => {
+    this.messagesSubject.subscribe({
+      next: msg => observer.next(msg),
+    });
+  });
+
   constructor() {
     this.initialiseBot();
+  }
+
+  public reply(data: MessageData) : void {
+    if (data.message !== null) {
+      this.bot.sendMessage({
+        to: data.channelId,
+        message: data.message,
+      });
+      logger.info('Replying on [' + data.channelId + '] with message: [' + data.message + ']');
+    }
   }
 
   private initialiseBot() : void {
@@ -34,21 +50,5 @@ export class Bot {
         this.messagesSubject.next(data);
       }
     });
-  }
-
-  public messages = new Observable<MessageData>((observer) => {
-    this.messagesSubject.subscribe({
-      next: msg => observer.next(msg),
-    });
-  });
-
-  public reply(data: MessageData) : void {
-    if (data.message !== null) {
-      this.bot.sendMessage({
-        to: data.channelId,
-        message: data.message,
-      });
-      logger.info('Replying on [' + data.channelId + '] with message: [' + data.message + ']');
-    }
   }
 }

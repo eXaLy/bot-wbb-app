@@ -1,22 +1,22 @@
 import { Bot } from '../../bot/bot';
 import { MessageData } from '../../bot/messageData';
-import { SoccerVideosFeedProcessor } from './soccerVideosFeedProcessor';
+import { SoccerVideosFeedRunner } from './soccerVideosFeedRunner';
 import { SubscriptionManager } from '../subscription/subscriptionManager';
 
 export class SoccerVideosFeedManager {
 
   private bot: Bot;
   private subscriptionManager: SubscriptionManager;
-  private processor: SoccerVideosFeedProcessor;
+  private runner: SoccerVideosFeedRunner;
 
   constructor(
     bot: Bot,
     subscriptionManager: SubscriptionManager,
-    processor: SoccerVideosFeedProcessor,
+    runner: SoccerVideosFeedRunner,
   ) {
     this.bot = bot;
     this.subscriptionManager = subscriptionManager;
-    this.processor = processor;
+    this.runner = runner;
     this.listenToActiveSubscriptions();
     this.listenToFeed();
   }
@@ -29,14 +29,14 @@ export class SoccerVideosFeedManager {
 
   private onActive(isActive: boolean) : void {
     if (isActive) {
-      this.processor.enable();
+      this.runner.enable();
     } else {
-      this.processor.disable();
+      this.runner.disable();
     }
   }
 
   private listenToFeed() : void {
-    this.processor.feed.subscribe({
+    this.runner.feed.subscribe({
       next: text => this.onFeed(text),
     });
   }

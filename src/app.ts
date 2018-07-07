@@ -4,6 +4,7 @@ import { ListenToReplyManager } from './workers/listenToReply/listenToReplyManag
 import { ListenToReplyProcessor } from './workers/listenToReply/listenToReplyProcessor';
 import { SoccerVideosFeedManager } from './workers/soccerVideosFeed/soccerVideosFeedManager';
 import { SubscriptionManager } from './workers/subscription/subscriptionManager';
+import { SoccerVideosFeedRunner } from './workers/soccerVideosFeed/soccerVideosFeedRunner';
 import { SoccerVideosFeedProcessor } from './workers/soccerVideosFeed/soccerVideosFeedProcessor';
 
 class App {
@@ -17,7 +18,7 @@ class App {
     new SoccerVideosFeedManager(
       bot,
       new SubscriptionManager(bot, 'soccer-feed', '!startsoccer', '!stopsoccer'),
-      new SoccerVideosFeedProcessor(),
+      new SoccerVideosFeedRunner(new SoccerVideosFeedProcessor()),
     );
   }
 }
