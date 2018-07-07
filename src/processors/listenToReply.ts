@@ -4,10 +4,20 @@ import * as messages from './listenToReplyMessages';
 
 export class ListenToReply {
 
+  private bot: Bot;
+
   constructor(bot: Bot) {
+    this.bot = bot;
     bot.messages.subscribe({
-      next: data => bot.reply(new MessageData(data.userId, data.channelId, this.ask(data.message))),
+      next: data => this.onMessage(data),
     });
+  }
+
+  private onMessage(data: MessageData) : void {
+    const msg = this.ask(data.message);
+    if (msg !== null) {
+      this.bot.reply(new MessageData(data.userId, data.channelId, msg));
+    }
   }
 
   private ask(message: string) : string {
