@@ -3,7 +3,7 @@ import { MessageData } from '../../bot/messageData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import logger from '../../utils/logger';
 
-const TAG = '[Subscription]';
+const TAG = '[SubscriptionManager]';
 
 export class SubscriptionManager {
 
@@ -39,7 +39,9 @@ export class SubscriptionManager {
     });
   }
 
+  // TODO: SOMETHING BUGGY HERE
   private onMessage(data: MessageData) : void {
+    logger.info(TAG + ' Message in for [' + this.key + ']');
     if (data.message.contains(this.subscribeCommand)) {
       this.addChannel(data.channelId);
       this.updateState();
@@ -49,6 +51,7 @@ export class SubscriptionManager {
     }
   }
 
+  // TODO: SOMETHING BUGGY HERE
   private updateState() {
     if (this.activeChannelIds.length > 0 && !this.hasSubscribers.getValue) {
       this.hasSubscribers.next(true);
@@ -60,11 +63,12 @@ export class SubscriptionManager {
   }
 
   private addChannel(channelId: string) : void {
-    if (this.activeChannelIds.indexOf(channelId) > -1) {
+    if (this.activeChannelIds.indexOf(channelId) === -1) {
       this.activeChannelIds.push(channelId);
       logger.info(TAG + ' Added channel: [' + channelId + '] on [' + this.key + ']');
+    } else {
+      logger.info(TAG + ' Channel already added: [' + channelId + '] on [' + this.key + ']');
     }
-    logger.info(TAG + ' Channel already added: [' + channelId + '] on [' + this.key + ']');
   }
 
   private deleteChannel(channelId: string) : void {
@@ -72,7 +76,8 @@ export class SubscriptionManager {
     if (index !== -1) {
       this.activeChannelIds.splice(index, 1);
       logger.info(TAG + ' Deleted channel: [' + channelId + '] on [' + this.key + ']');
+    } else {
+      logger.info(TAG + ' Channel already deleted: [' + channelId + '] on [' + this.key + ']');
     }
-    logger.info(TAG + ' Channel already deleted: [' + channelId + '] on [' + this.key + ']');
   }
 }

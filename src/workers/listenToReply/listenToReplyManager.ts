@@ -1,6 +1,9 @@
 import { Bot } from '../../bot/bot';
 import { MessageData } from '../../bot/messageData';
 import { ListenToReplyProcessor } from './listenToReplyProcessor';
+import logger from '../../utils/logger';
+
+const TAG = '[ListenToReplyManager]';
 
 export class ListenToReplyManager {
 
@@ -20,6 +23,7 @@ export class ListenToReplyManager {
   }
 
   private onMessage(data: MessageData) : void {
+    logger.info(TAG + ' Message in');
     const msg = this.processor.ask(data.message);
     if (msg !== null) {
       this.bot.reply(new MessageData(data.userId, data.channelId, msg));

@@ -16,7 +16,7 @@ class App {
 
     new SoccerVideosFeedManager(
       bot,
-      new SubscriptionManager(bot, 'soccer-feed', '!startSoccerFeed', '!stopSoccerFeed'),
+      new SubscriptionManager(bot, 'soccer-feed', '!startsoccer', '!stopsoccer'),
       new SoccerVideosFeedProcessor(),
     );
   }
