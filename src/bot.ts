@@ -36,10 +36,12 @@ export class Bot {
   });
 
   public reply(data: MessageData) : void {
-    this.bot.sendMessage({
-      to: data.channelId,
-      message: data.message,
-    });
-    logger.info('Replying on [' + data.channelId + '] with message: [' + data.message + ']');
+    if (data.message !== null) {
+      this.bot.sendMessage({
+        to: data.channelId,
+        message: data.message,
+      });
+      logger.info('Replying on [' + data.channelId + '] with message: [' + data.message + ']');
+    }
   }
 }
