@@ -1,11 +1,12 @@
-import { Bot } from './bot';
-import { ListenToReply } from './processors/listenToReply';
+import { Bot } from './bot/bot';
+import { ListenToReplyManager } from './workers/listenToReply/listenToReplyManager';
+import { ListenToReplyProcessor } from './workers/listenToReply/listenToReplyProcessor';
 
 class App {
 
   constructor() {
     const bot = new Bot();
-    new ListenToReply(bot);
+    new ListenToReplyManager(bot, new ListenToReplyProcessor());
   }
 }
 

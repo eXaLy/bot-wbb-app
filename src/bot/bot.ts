@@ -1,8 +1,8 @@
 import * as discord from 'discord.io';
-import * as tokenFinder from './utils/tokenFinder';
-import logger from './utils/logger';
+import * as tokenFinder from '../utils/tokenFinder';
+import logger from '../utils/logger';
 import { Observable } from 'rxjs';
-import { MessageData } from './data/messageData';
+import { MessageData } from './messageData';
 
 export class Bot {
 
