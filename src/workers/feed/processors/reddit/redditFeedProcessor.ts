@@ -23,6 +23,7 @@ export class RedditFeedProcessor implements FeedProcessor {
     return this.getResponse().pipe(map(data => this.findData(data)));
   }
 
+  // TODO: FIX TIMESTAMP CHECKER + EXTRACT LOGIC
   private findData(body: string) : string[] {
     const data = JSON.parse(body);
 
@@ -34,14 +35,25 @@ export class RedditFeedProcessor implements FeedProcessor {
         if (item.data && (this.config.allowedSources == null ||
             this.config.allowedSources.indexOf(item.data.domain) !== -1)) {
 
-          logger.info(TAG + ' Found: ' + item.data.title);
-          const source = item.data.title + '\n' + item.data.url;
-          sources.push(source);
-          i += 1;
+          if (!this.isUpToDate(item.data.created)) {
+            if (i === 0) {
+              this.storage.setLastUpdate(item.data.created);
+            }
+
+            logger.info(TAG + ' Found: ' + item.data.title);
+            const source = item.data.title + '\n' + item.data.url;
+            sources.push(source);
+            i += 1;
+          }
         }
       });
     }
     return sources;
+  }
+
+  private isUpToDate(currentTimestamp: string) : boolean {
+    const lastUpdate = this.storage.getLastUpdate();
+    return (lastUpdate !== null && currentTimestamp <= lastUpdate);
   }
 
   private getResponse() : Observable<string> {

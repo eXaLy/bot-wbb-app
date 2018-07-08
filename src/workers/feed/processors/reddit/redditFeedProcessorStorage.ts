@@ -1,5 +1,7 @@
 import { FileStorage } from '../../../../storage/fileStorage';
+import logger from '../../../../utils/logger';
 
+const TAG = '[RedditFeedProcessorStorage]';
 const KEY_LAST_UPDATE = 'reddit-feed-last-update';
 
 export class RedditFeedProcessorStorage {
@@ -15,6 +17,11 @@ export class RedditFeedProcessorStorage {
   }
 
   public getLastUpdate() : string {
-    return this.fileStorage.readFile(KEY_LAST_UPDATE);
+    try {
+      return this.fileStorage.readFile(KEY_LAST_UPDATE);
+    } catch (e) {
+      logger.warning(TAG + ' Last update not found for: ' + KEY_LAST_UPDATE);
+    }
+    return null;
   }
 }
