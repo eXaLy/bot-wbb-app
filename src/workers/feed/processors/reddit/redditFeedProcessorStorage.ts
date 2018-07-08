@@ -12,16 +12,16 @@ export class RedditFeedProcessorStorage {
     this.fileStorage = fileStorage;
   }
 
-  public setLastUpdate(timestamp: string) : void {
-    this.fileStorage.storeFile(KEY_LAST_UPDATE, timestamp);
+  public setLastUpdate(timestamp: number) : void {
+    this.fileStorage.storeFile(KEY_LAST_UPDATE, timestamp.toString());
   }
 
-  public getLastUpdate() : string {
+  public getLastUpdate() : number {
     try {
-      return this.fileStorage.readFile(KEY_LAST_UPDATE);
+      return +this.fileStorage.readFile(KEY_LAST_UPDATE);
     } catch (e) {
       logger.warning(TAG + ' Last update not found for: ' + KEY_LAST_UPDATE);
     }
-    return null;
+    return 0;
   }
 }

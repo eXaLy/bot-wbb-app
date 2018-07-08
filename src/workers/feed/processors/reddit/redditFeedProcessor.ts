@@ -51,7 +51,7 @@ export class RedditFeedProcessor implements FeedProcessor {
     return sources;
   }
 
-  private isUpToDate(currentTimestamp: string) : boolean {
+  private isUpToDate(currentTimestamp: number) : boolean {
     const lastUpdate = this.storage.getLastUpdate();
     return (lastUpdate !== null && currentTimestamp <= lastUpdate);
   }
