@@ -16,11 +16,14 @@ npm run start
 npm run prd
 ```
 
+## Setup
+Create a file in `wbb-storage/bot-token` with the Discord bot token as content.
+
 
 ## Setup for development
 - Install NodeJS 8
 - Install by NodeJS:
 ```
-npm install
 npm install -g ts-node tslint typescript
+npm install
 ```
