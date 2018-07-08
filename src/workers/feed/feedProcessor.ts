@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import logger from '../../utils/logger';
 
-const TAG = '[SoccerVideosFeedProcessor]';
+const TAG = '[FeedProcessor]';
 
-export class SoccerVideosFeedProcessor {
+export class FeedProcessor {
 
   constructor() {
   }

@@ -1,14 +1,14 @@
 import { Observable, Subject, interval, from } from 'rxjs';
 import { filter, flatMap, map } from 'rxjs/operators';
-import { SoccerVideosFeedProcessor } from './soccerVideosFeedProcessor';
+import { FeedProcessor } from './feedProcessor';
 import logger from '../../utils/logger';
 
-const TAG = '[SoccerVideosFeedRunner]';
+const TAG = '[FeedRunner]';
 const FIVE_SECONDS_IN_MILLIS = 5000;
 
-export class SoccerVideosFeedRunner {
+export class FeedRunner {
 
-  private processor: SoccerVideosFeedProcessor;
+  private processor: FeedProcessor;
   private feedSubject = new Subject<string>();
   private isEnabled = false;
 
@@ -18,12 +18,20 @@ export class SoccerVideosFeedRunner {
     });
   });
 
-  constructor(processor: SoccerVideosFeedProcessor) {
+  constructor(processor: FeedProcessor) {
     this.processor = processor;
     this.initialiseRequestRunner();
   }
 
-  private initialiseRequestRunner() {
+  public enable() : void {
+    this.isEnabled = true;
+  }
+
+  public disable() : void {
+    this.isEnabled = false;
+  }
+
+  private initialiseRequestRunner() : void {
     interval(FIVE_SECONDS_IN_MILLIS).pipe(
       filter(_ => this.isEnabled),
       flatMap(_ => this.processor.fetch()),
@@ -33,13 +41,5 @@ export class SoccerVideosFeedRunner {
       next: data => this.feedSubject.next(data),
       error: e => logger.error(TAG + ' Request failed', e),
     });
-  }
-
-  public enable() : void {
-    this.isEnabled = true;
-  }
-
-  public disable() : void {
-    this.isEnabled = false;
   }
 }

@@ -1,18 +1,18 @@
 import { Bot } from '../../bot/bot';
 import { MessageData } from '../../bot/messageData';
-import { SoccerVideosFeedRunner } from './soccerVideosFeedRunner';
+import { FeedRunner } from './feedRunner';
 import { SubscriptionManager } from '../subscription/subscriptionManager';
 
-export class SoccerVideosFeedManager {
+export class FeedManager {
 
   private bot: Bot;
   private subscriptionManager: SubscriptionManager;
-  private runner: SoccerVideosFeedRunner;
+  private runner: FeedRunner;
 
   constructor(
     bot: Bot,
     subscriptionManager: SubscriptionManager,
-    runner: SoccerVideosFeedRunner,
+    runner: FeedRunner,
   ) {
     this.bot = bot;
     this.subscriptionManager = subscriptionManager;
