@@ -2,15 +2,14 @@ import { Bot } from '../../bot/bot';
 import { MessageData } from '../../bot/messageData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import logger from '../../utils/logger';
+import { SubscriptionConfigData } from './subscriptionConfigData';
 
 const TAG = '[SubscriptionManager]';
 
 export class SubscriptionManager {
 
   private bot: Bot;
-  private key: string;
-  private subscribeCommand: string;
-  private unsubscribeCommand: string;
+  private config: SubscriptionConfigData;
   private activeChannelIds = [] as string[];
   private hasSubscribers = new BehaviorSubject<boolean>(false);
 
@@ -20,11 +19,9 @@ export class SubscriptionManager {
     });
   });
 
-  constructor(bot: Bot, key: string, subscribeCommand: string, unsubscribeCommand: string) {
+  constructor(bot: Bot, config: SubscriptionConfigData) {
     this.bot = bot;
-    this.key = key;
-    this.subscribeCommand = subscribeCommand;
-    this.unsubscribeCommand = unsubscribeCommand;
+    this.config = config;
     this.listenToMessages();
   }
 
@@ -39,10 +36,10 @@ export class SubscriptionManager {
   }
 
   private onMessage(data: MessageData) : void {
-    if (data.message.contains(this.subscribeCommand)) {
+    if (data.message.contains(this.config.subscribeCommand)) {
       this.addChannel(data.channelId);
       this.updateState();
-    } else if (data.message.contains(this.unsubscribeCommand)) {
+    } else if (data.message.contains(this.config.unsubscribeCommand)) {
       this.deleteChannel(data.channelId);
       this.updateState();
     }
@@ -52,12 +49,12 @@ export class SubscriptionManager {
     if (this.activeChannelIds.length > 0) {
       if (!this.hasSubscribers.value) {
         this.hasSubscribers.next(true);
-        logger.info(TAG + ' Has active subscribers on [' + this.key + ']');
+        logger.info(TAG + ' Has active subscribers on [' + this.config.key + ']');
       }
     } else {
       if (this.hasSubscribers.value) {
         this.hasSubscribers.next(false);
-        logger.info(TAG + ' No active subscribers on [' + this.key + ']');
+        logger.info(TAG + ' No active subscribers on [' + this.config.key + ']');
       }
     }
   }
@@ -65,9 +62,9 @@ export class SubscriptionManager {
   private addChannel(channelId: string) : void {
     if (this.activeChannelIds.indexOf(channelId) === -1) {
       this.activeChannelIds.push(channelId);
-      logger.info(TAG + ' Added channel: [' + channelId + '] on [' + this.key + ']');
+      logger.info(TAG + ' Added channel: [' + channelId + '] on [' + this.config.key + ']');
     } else {
-      logger.info(TAG + ' Channel already added: [' + channelId + '] on [' + this.key + ']');
+      logger.info(TAG + ' Channel already added: [' + channelId + '] on [' + this.config.key + ']');
     }
   }
 
@@ -75,9 +72,10 @@ export class SubscriptionManager {
     const index = this.activeChannelIds.indexOf(channelId);
     if (index !== -1) {
       this.activeChannelIds.splice(index, 1);
-      logger.info(TAG + ' Deleted channel: [' + channelId + '] on [' + this.key + ']');
+      logger.info(TAG + ' Deleted channel: [' + channelId + '] on [' + this.config.key + ']');
     } else {
-      logger.info(TAG + ' Channel already deleted: [' + channelId + '] on [' + this.key + ']');
+      logger.info(TAG + ' Channel already deleted: [' + channelId + ']'
+      + ' on [' + this.config.key + ']');
     }
   }
 }
