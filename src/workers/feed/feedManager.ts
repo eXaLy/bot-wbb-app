@@ -1,7 +1,7 @@
 import { Bot } from '../../bot/bot';
 import { MessageData } from '../../bot/messageData';
 import { FeedRunner } from './feedRunner';
-import { SubscriptionManager } from '../subscription/subscriptionManager';
+import { SubscriptionManager } from '../../subscription/subscriptionManager';
 
 export class FeedManager {
 

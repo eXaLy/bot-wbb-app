@@ -1,13 +1,14 @@
 import * as discord from 'discord.io';
-import * as tokenFinder from './botTokenFinder';
 import logger from '../utils/logger';
 import { Observable, Subject } from 'rxjs';
 import { MessageData } from './messageData';
+import { TokenStorage } from './tokenStorage';
 
 const TAG = '[BOT]';
 
 export class Bot {
 
+  private tokenStorage: TokenStorage;
   private bot: discord.Client;
   private messagesSubject = new Subject<MessageData>();
 
@@ -17,7 +18,8 @@ export class Bot {
     });
   });
 
-  constructor() {
+  constructor(tokenStorage: TokenStorage) {
+    this.tokenStorage = tokenStorage;
     this.initialiseBot();
   }
 
@@ -35,7 +37,7 @@ export class Bot {
 
   private initialiseBot() : void {
     const config = {
-      token: tokenFinder.findToken(),
+      token: this.tokenStorage.getToken(),
       autorun: true,
     };
 

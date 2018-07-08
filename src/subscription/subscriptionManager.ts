@@ -1,7 +1,7 @@
-import { Bot } from '../../bot/bot';
-import { MessageData } from '../../bot/messageData';
+import { Bot } from '../bot/bot';
+import { MessageData } from '../bot/messageData';
 import { BehaviorSubject, Observable } from 'rxjs';
-import logger from '../../utils/logger';
+import logger from '../utils/logger';
 import { SubscriptionConfigData } from './subscriptionConfigData';
 
 const TAG = '[SubscriptionManager]';

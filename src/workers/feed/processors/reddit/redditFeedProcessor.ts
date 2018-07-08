@@ -1,18 +1,21 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as https from 'https';
-import { FeedProcessor } from './feedProcessor';
-import { FeedConfigData } from './feedConfigData';
-import logger from '../../utils/logger';
+import { FeedProcessor } from '../../feedProcessor';
+import { FeedConfigData } from '../../feedConfigData';
+import logger from '../../../../utils/logger';
+import { RedditFeedProcessorStorage } from './redditFeedProcessorStorage';
 
 const TAG = '[RedditFeedProcessor]';
 
 export class RedditFeedProcessor implements FeedProcessor {
 
   private config: FeedConfigData;
+  private storage: RedditFeedProcessorStorage;
 
-  constructor(config: FeedConfigData) {
+  constructor(config: FeedConfigData, storage: RedditFeedProcessorStorage) {
     this.config = config;
+    this.storage = storage;
   }
 
   // override

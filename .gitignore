@@ -75,5 +75,5 @@ typings/
 # Project output
 output
 
-# Token file
-token
+# Storage
+wbb-storage
