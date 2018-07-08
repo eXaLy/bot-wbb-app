@@ -5,6 +5,7 @@ import { FeedProcessor } from '../../feedProcessor';
 import { FeedConfigData } from '../../feedConfigData';
 import logger from '../../../../utils/logger';
 import { RedditFeedProcessorStorage } from './redditFeedProcessorStorage';
+import { RedditItemData } from './redditItemData';
 
 const TAG = '[RedditFeedProcessor]';
 
@@ -20,14 +21,25 @@ export class RedditFeedProcessor implements FeedProcessor {
 
   // override
   public fetch() : Observable<string[]> {
-    return this.getResponse().pipe(map(data => this.findData(data)));
+    return this.getResponse().pipe(
+      map(data => this.parseData(data)),
+      map(items => items.filter(item => !this.isUpToDate(item.createdTimestamp))),
+      map(items => this.updateLastUpdate(items)),
+      map(items => items.map(item => item.toDisplayString()),
+    ));
   }
 
-  // TODO: FIX TIMESTAMP CHECKER + EXTRACT LOGIC
-  private findData(body: string) : string[] {
+  private updateLastUpdate(items: RedditItemData[]) : RedditItemData[] {
+    if (items.length > 0) {
+      this.storage.setLastUpdate(items[0].createdTimestamp);
+    }
+    return items;
+  }
+
+  private parseData(body: string) : RedditItemData[] {
     const data = JSON.parse(body);
 
-    const sources = [] as string[];
+    const redditItems = [] as RedditItemData[];
     if (data && data.data && data.data.children) {
       const items = data.data.children;
       let i = 0;
@@ -35,25 +47,18 @@ export class RedditFeedProcessor implements FeedProcessor {
         if (item.data && (this.config.allowedSources == null ||
             this.config.allowedSources.indexOf(item.data.domain) !== -1)) {
 
-          if (!this.isUpToDate(item.data.created)) {
-            if (i === 0) {
-              this.storage.setLastUpdate(item.data.created);
-            }
-
-            logger.info(TAG + ' Found: ' + item.data.title);
-            const source = item.data.title + '\n' + item.data.url;
-            sources.push(source);
-            i += 1;
-          }
+          const redditItem = new RedditItemData(item.data.created, item.data.title, item.data.url);
+          redditItems.push(redditItem);
+          i += 1;
         }
       });
     }
-    return sources;
+    return redditItems;
   }
 
   private isUpToDate(currentTimestamp: number) : boolean {
     const lastUpdate = this.storage.getLastUpdate();
-    return (lastUpdate !== null && currentTimestamp <= lastUpdate);
+    return currentTimestamp <= lastUpdate;
   }
 
   private getResponse() : Observable<string> {

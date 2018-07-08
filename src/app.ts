@@ -40,7 +40,7 @@ class App {
             'my.mixtape.moe',
           ],
         },
-        new RedditFeedProcessorStorage(fileStorage),
+        new RedditFeedProcessorStorage(fileStorage, 'soccer-feed'),
       )),
     );
   }
