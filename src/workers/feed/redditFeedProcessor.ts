@@ -28,8 +28,8 @@ export class RedditFeedProcessor implements FeedProcessor {
       const items = data.data.children;
       let i = 0;
       items.forEach((item) => {
-        if (item.data && this.config.allowedSources == null ||
-          this.config.allowedSources.indexOf(item.data.domain) !== -1) {
+        if (item.data && (this.config.allowedSources == null ||
+            this.config.allowedSources.indexOf(item.data.domain) !== -1)) {
 
           logger.info(TAG + ' Found: ' + item.data.title);
           const source = item.data.title + '\n' + item.data.url;
