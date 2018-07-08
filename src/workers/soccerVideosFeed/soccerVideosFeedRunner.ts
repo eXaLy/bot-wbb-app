@@ -1,7 +1,9 @@
 import { Observable, Subject, interval, from } from 'rxjs';
 import { filter, flatMap, map } from 'rxjs/operators';
 import { SoccerVideosFeedProcessor } from './soccerVideosFeedProcessor';
+import logger from '../../utils/logger';
 
+const TAG = '[SoccerVideosFeedRunner]';
 const FIVE_SECONDS_IN_MILLIS = 5000;
 
 export class SoccerVideosFeedRunner {
@@ -29,6 +31,7 @@ export class SoccerVideosFeedRunner {
     )
     .subscribe({
       next: data => this.feedSubject.next(data),
+      error: e => logger.error(TAG + ' Request failed', e),
     });
   }
 

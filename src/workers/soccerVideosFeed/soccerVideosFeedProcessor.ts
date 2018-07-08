@@ -1,4 +1,7 @@
 import { Observable } from 'rxjs';
+import logger from '../../utils/logger';
+
+const TAG = '[SoccerVideosFeedProcessor]';
 
 export class SoccerVideosFeedProcessor {
 
@@ -6,6 +9,8 @@ export class SoccerVideosFeedProcessor {
   }
 
   public fetch() : Observable<string[]> {
-    return null;
+    logger.info(TAG + ' Fetch latest data');
+    return new Observable<string[]>((observer) => {
+    });
   }
 }
