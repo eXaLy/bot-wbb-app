@@ -42,8 +42,8 @@ export class FeedManager {
   }
 
   private onFeed(text: string) : void {
-    const channels = this.subscriptionManager.getActiveChannelIds;
-    for (const channelId of channels.arguments) {
+    const channels = this.subscriptionManager.getActiveChannelIds();
+    for (const channelId of channels) {
       this.bot.reply(new MessageData(null, channelId, text));
     }
   }

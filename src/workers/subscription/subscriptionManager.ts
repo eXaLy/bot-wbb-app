@@ -26,7 +26,7 @@ export class SubscriptionManager {
   }
 
   public getActiveChannelIds() : string[] {
-    return this.activeChannelIds.map(x => Object.assign({}, x));
+    return this.activeChannelIds;
   }
 
   private listenToMessages() : void {
@@ -38,9 +38,15 @@ export class SubscriptionManager {
   private onMessage(data: MessageData) : void {
     if (data.message.contains(this.config.subscribeCommand)) {
       this.addChannel(data.channelId);
+      this.bot.reply(new MessageData(
+        null, data.channelId, 'Activated for [' + this.config.key + ']',
+      ));
       this.updateState();
     } else if (data.message.contains(this.config.unsubscribeCommand)) {
       this.deleteChannel(data.channelId);
+      this.bot.reply(new MessageData(
+        null, data.channelId, 'Deactivated for [' + this.config.key + ']',
+      ));
       this.updateState();
     }
   }

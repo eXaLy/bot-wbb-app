@@ -4,6 +4,8 @@ import logger from '../utils/logger';
 import { Observable, Subject } from 'rxjs';
 import { MessageData } from './messageData';
 
+const TAG = '[BOT]';
+
 export class Bot {
 
   private bot: discord.Client;
@@ -25,7 +27,9 @@ export class Bot {
         to: data.channelId,
         message: data.message,
       });
-      logger.info('Replying on [' + data.channelId + '] with message: [' + data.message + ']');
+      logger.info(
+        TAG + ' Replying on [' + data.channelId + '] with message: [' + data.message + ']',
+      );
     }
   }
 
@@ -38,16 +42,18 @@ export class Bot {
     this.bot = new discord.Client(config);
 
     this.bot.on('ready', (evt) : void => {
-      logger.info('Connected');
-      logger.info('Logged in as: ' + this.bot.username + ' - (' + this.bot.id + ')');
+      logger.info(TAG + ' Connected');
+      logger.info(TAG + ' Logged in as: ' + this.bot.username + ' - (' + this.bot.id + ')');
     });
 
     this.bot.on('message', (user: discord.User, userId: string, channelId: string,
                             message: string, event: Event) : void => {
       if (userId !== this.bot.id) {
         const data = new MessageData(userId, channelId, message);
-        logger.info('Input: channel [' + data.channelId + '] with message: [' + data.message + ']');
         this.messagesSubject.next(data);
+        logger.info(
+          TAG + ' Input: channel [' + data.channelId + '] with message: [' + data.message + ']',
+        );
       }
     });
   }
