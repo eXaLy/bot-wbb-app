@@ -9,7 +9,7 @@ build:
   artifacts:
     untracked: true
   script:
-    - npm build
+    - npm run build
 
 deploy:
   stage: deploy
