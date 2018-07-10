@@ -7,7 +7,10 @@ stages:
 build:
   stage: build
   artifacts:
+    when: on_success
     untracked: true
+    paths:
+      - Procfile
   script:
     - npm install -g ts-node tslint typescript
     - npm install
