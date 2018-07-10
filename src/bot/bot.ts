@@ -57,7 +57,9 @@ export class Bot {
     });
 
     this.bot.on('disconnect', (errMsg, code) => {
-      logger.error(TAG + ' Connection failed: ' + errMsg);
+      logger.error(TAG + ' Connection broken. Error code: ' + code);
+      logger.info(TAG + ' Re-connecting...');
+      this.bot.connect();
     });
 
     this.bot.on('message', (user: discord.User, userId: string, channelId: string,
@@ -70,7 +72,5 @@ export class Bot {
         );
       }
     });
-
-    this.bot.connect();
   }
 }
