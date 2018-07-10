@@ -9,6 +9,7 @@ build:
   artifacts:
     untracked: true
   script:
+    - npm install -g ts-node tslint typescript
     - npm run build
 
 deploy:
