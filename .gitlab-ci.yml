@@ -1,9 +1,9 @@
 image: node:latest
 
 stages:
-  - production
+  - deploy
   
-production:
+build-and-deploy:
   stage: deploy
   image: ruby:latest
   script:
