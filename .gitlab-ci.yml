@@ -1,10 +1,20 @@
 image: node:latest
 
 stages:
+  - build
   - deploy
   
-build-and-deploy:
+build:
+  stage: build
+  artifacts:
+    untracked: true
+  script:
+    - npm build
+
+deploy:
   stage: deploy
+  dependencies: 
+    - build
   image: ruby:latest
   script:
     - apt-get update -qy

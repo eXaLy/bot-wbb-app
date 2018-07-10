@@ -9,11 +9,11 @@ npm run dev
 // Build project into JS
 npm run build
 
-// Run the built project
-npm run play
+// Start the built project
+npm run start
 
 // Build and start the project
-npm run start
+npm run prd
 ```
 
 ## Setup
