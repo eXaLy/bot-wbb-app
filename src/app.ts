@@ -6,17 +6,18 @@ import { SubscriptionManager } from './subscription/subscriptionManager';
 import { FeedManager } from './workers/feed/feedManager';
 import { FeedRunner } from './workers/feed/feedRunner';
 import { RedditFeedProcessor } from './workers/feed/processors/reddit/redditFeedProcessor';
-import { TokenStorage } from './bot/tokenStorage';
 import { FileStorage } from './storage/fileStorage';
 import { RedditFeedProcessorStorage }
   from './workers/feed/processors/reddit/redditFeedProcessorStorage';
+import { ConfigHandler } from './configuration/configHandler';
 
 class App {
 
   constructor() {
 
     const fileStorage = new FileStorage();
-    const bot = new Bot(new TokenStorage(fileStorage));
+    const configHandler = new ConfigHandler();
+    const bot = new Bot(configHandler);
 
     new ListenToReplyManager(bot, new ListenToReplyProcessor());
 

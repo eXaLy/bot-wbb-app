@@ -2,13 +2,13 @@ import * as discord from 'discord.io';
 import logger from '../utils/logger';
 import { Observable, Subject } from 'rxjs';
 import { MessageData } from './messageData';
-import { TokenStorage } from './tokenStorage';
+import { ConfigHandler } from '../configuration/configHandler';
 
 const TAG = '[BOT]';
 
 export class Bot {
 
-  private tokenStorage: TokenStorage;
+  private configHandler: ConfigHandler;
   private bot: discord.Client;
   private messagesSubject = new Subject<MessageData>();
 
@@ -18,8 +18,8 @@ export class Bot {
     });
   });
 
-  constructor(tokenStorage: TokenStorage) {
-    this.tokenStorage = tokenStorage;
+  constructor(configHandler: ConfigHandler) {
+    this.configHandler = configHandler;
     this.initialiseBot();
   }
 
@@ -35,9 +35,17 @@ export class Bot {
     }
   }
 
+  private getToken() : string {
+    const token = this.configHandler.getBotToken();
+    if (token === null || token.length === 0) {
+      logger.error(TAG + ' Token is missing! Please provide it by NPM config param.');
+    }
+    return token;
+  }
+
   private initialiseBot() : void {
     const config = {
-      token: this.tokenStorage.getToken(),
+      token: this.getToken(),
       autorun: true,
     };
 
@@ -46,6 +54,10 @@ export class Bot {
     this.bot.on('ready', (evt) : void => {
       logger.info(TAG + ' Connected');
       logger.info(TAG + ' Logged in as: ' + this.bot.username + ' - (' + this.bot.id + ')');
+    });
+
+    this.bot.on('disconnect', (errMsg, code) => {
+      logger.error(TAG + ' Connection failed: ' + errMsg);
     });
 
     this.bot.on('message', (user: discord.User, userId: string, channelId: string,
@@ -58,5 +70,7 @@ export class Bot {
         );
       }
     });
+
+    this.bot.connect();
   }
 }
