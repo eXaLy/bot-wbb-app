@@ -10,6 +10,7 @@ build:
     untracked: true
   script:
     - npm install -g ts-node tslint typescript
+    - npm install
     - npm run build
 
 deploy:
