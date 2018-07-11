@@ -72,9 +72,8 @@ typings/
 # Serverless directories
 .serverless
 
-# Project output logs
-output/all.log
-output/error.log
+# Project output directory
+output/
 
 # Storage directory
 wbb-storage/
