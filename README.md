@@ -17,7 +17,7 @@ npm run prd
 ```
 
 ## Setup
-Create a file in `wbb-storage/bot-token` with the Discord bot token as content.
+Set environment variable `BOT_TOKEN` with the Discord bot token as value.
 
 
 ## Setup for development
