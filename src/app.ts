@@ -11,6 +11,8 @@ import { RedditFeedProcessorStorage }
   from './workers/feed/processors/reddit/redditFeedProcessorStorage';
 import { ConfigHandler } from './configuration/configHandler';
 
+const KEY_FOOTBALL_FEED = 'football-feed';
+
 class App {
 
   constructor() {
@@ -24,13 +26,13 @@ class App {
     new FeedManager(
       bot,
       new SubscriptionManager(bot, {
-        key: 'soccer-feed',
-        subscribeCommand: '!startsoccer',
-        unsubscribeCommand: '!stopsoccer',
+        key: KEY_FOOTBALL_FEED,
+        subscribeCommand: '!startfootball',
+        unsubscribeCommand: '!stopfootball',
       }),
       new FeedRunner(new RedditFeedProcessor(
         {
-          key: 'soccer-feed',
+          key: KEY_FOOTBALL_FEED,
           resourceLink: 'https://www.reddit.com/r/soccer/new/.json',
           allowedSources: [
             'streamja.com',
@@ -41,7 +43,7 @@ class App {
             'my.mixtape.moe',
           ],
         },
-        new RedditFeedProcessorStorage(fileStorage, 'soccer-feed'),
+        new RedditFeedProcessorStorage(fileStorage, KEY_FOOTBALL_FEED),
       )),
     );
   }
