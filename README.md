@@ -1,4 +1,7 @@
 # BOT-WBB-APP
+
+![BOT-WBB LOGO](docs/logo.png?raw=true "BOT-WBB")
+
 The next level bot stuff.
 
 ## How to..
@@ -17,12 +20,15 @@ npm run prd
 ```
 
 ## Setup
-Set environment variable `BOT_TOKEN` with the Discord bot token as value.
+>Set environment variable `BOT_TOKEN` with the Discord bot token as value.
+
+>Or put the variable in a `.env` file in root folder.
 
 
 ## Setup for development
-- Install NodeJS 8
-- Install by NodeJS:
+> Install NodeJS 8
+
+> Install by NodeJS:
 ```
 npm install -g ts-node tslint typescript
 npm install
