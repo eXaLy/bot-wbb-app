@@ -27,6 +27,6 @@ deploy:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=bot-wbb --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=bot-wbb --api-key=$HEROKU_API_KEY --skip-cleanup
   only:
     - master
