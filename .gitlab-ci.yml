@@ -12,7 +12,7 @@ build:
     paths:
       - Procfile
       - node_modules
-      - output
+      - dist
   script:
     - npm install -g ts-node tslint typescript
     - npm install
