@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "the wbb bot",
   "main": "app.js",
-  "config": {
-    "bottoken": ""
-  },
   "scripts": {
     "build": "npm run lint && tsc",
     "dev": "ts-node ./src/app.ts",
@@ -27,8 +24,10 @@
   },
   "homepage": "https://gitlab.com/bot-wbb/bot-wbb-app#README",
   "dependencies": {
+    "@types/dotenv": "^4.0.3",
     "@types/node": "^10.5.2",
     "discord.io": "github:izy521/discord.io",
+    "dotenv": "^6.0.0",
     "rxjs": "^6.2.1",
     "winston": "^3.0.0"
   },
