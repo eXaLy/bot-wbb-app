@@ -77,6 +77,3 @@ output/
 
 # Storage directory
 wbb-storage/
-
-# Dist directory
-dist/
